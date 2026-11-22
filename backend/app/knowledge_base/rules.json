@@ -1,0 +1,39 @@
+[
+  {
+    "id": "HZ-01",
+    "title": "Conservative habitable-zone screen",
+    "conditions": [
+      "inside_simplified_hz"
+    ],
+    "conclusion": "hz_screen_pass",
+    "explanation": "The orbital distance falls inside the project's simplified luminosity-scaled HZ interval."
+  },
+  {
+    "id": "SIZE-01",
+    "title": "Earth-size radius screen",
+    "conditions": [
+      "earth_size_radius"
+    ],
+    "conclusion": "size_screen_pass",
+    "explanation": "The measured radius falls within the configurable 0.8\u20131.4 Earth-radii screening band."
+  },
+  {
+    "id": "DENS-01",
+    "title": "Density available",
+    "conditions": [
+      "density_calculated"
+    ],
+    "conclusion": "density_evidence_available",
+    "explanation": "Mass and radius are both available, so a bulk-density estimate can be calculated. Density alone does not prove composition."
+  },
+  {
+    "id": "FINAL-01",
+    "title": "Multiple screening indicators",
+    "conditions": [
+      "hz_screen_pass",
+      "size_screen_pass"
+    ],
+    "conclusion": "multiple_screening_indicators",
+    "explanation": "The object passes both the simplified HZ and Earth-size screens. This is a shortlist indicator, not a habitability verdict."
+  }
+]
