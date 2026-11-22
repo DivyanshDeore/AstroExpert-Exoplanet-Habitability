@@ -3,7 +3,7 @@ import axios from 'axios'
 import { fallbackCatalogue } from './data/exoplanets'
 import { Activity, Atom, Bookmark, ChevronRight, CircleHelp, Compass, Database, ExternalLink, Filter, Globe2, Heart, LayoutDashboard, Loader2, Menu, Orbit, RefreshCw, Search, ShieldCheck, SlidersHorizontal, Sparkles, Star, Telescope, X } from 'lucide-react'
 
-const API = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
+const API = import.meta.env.VITE_API_BASE_URL || ''
 type Planet = { id:number; name:string; host_star:string; discovery_method:string; discovery_year:number|null; radius_earth:number|null; mass_earth:number|null; orbital_period_days:number|null; semi_major_axis_au:number|null; stellar_luminosity_solar:number|null; stellar_temperature_k:number|null; insolation_earth:number|null; source:string; source_url:string|null; is_favorite:boolean }
 type Assessment = { planet_name:string; assessment:string; stellar_flux_earth_units:number; simplified_hz_au:{inner_au:number;outer_au:number}; relative_density_earth_units:number|null; facts:string[]; fired_rules:{id:string;title:string;explanation:string;conditions:string[];conclusion:string}[]; limitations:string[] }
 type Page = 'Overview'|'Exoplanet Explorer'|'Habitability Assessment'|'Compare Worlds'|'Saved Worlds'|'Assessment History'|'Methodology'

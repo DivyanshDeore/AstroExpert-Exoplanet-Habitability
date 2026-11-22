@@ -2,6 +2,8 @@ import json
 import os
 from pathlib import Path
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
@@ -20,7 +22,8 @@ cors_origins = [x.strip() for x in os.getenv("CORS_ORIGINS", "http://localhost:5
 app.add_middleware(CORSMiddleware, allow_origins=cors_origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 CATALOGUE_PATH = Path(__file__).parent / "data" / "exoplanets.json"
-
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
 class AssessmentInput(BaseModel):
     name: str = Field(min_length=1, max_length=160)
     stellar_luminosity_solar: float = Field(gt=0)
@@ -52,7 +55,10 @@ def seed_catalogue():
 
 @app.get("/")
 def home():
-    return {"app":"AstroExpert","status":"running","version":app.version}
+    index_file = FRONTEND_DIST / "index.html"
+    if index_file.exists():
+        return FileResponse(index_file)
+    return {"app": "AstroExpert", "status": "running"}
 
 @app.get("/api/dataset/metadata")
 def dataset_metadata():
@@ -222,3 +228,9 @@ def get_assessment(assessment_id: int, db: Session = Depends(get_db)):
     return {"id": row.id, "planet_name": row.planet_name, "assessment": row.assessment,
             "stellar_flux": row.stellar_flux, "created_at": row.created_at.isoformat(),
             "facts": json.loads(row.facts_json), "explanations": json.loads(row.explanation_json)}
+if FRONTEND_DIST.exists():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(FRONTEND_DIST), html=True),
+        name="frontend"
+    )
