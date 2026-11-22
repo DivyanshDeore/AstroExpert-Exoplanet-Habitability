@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Explicitly scan the React source tree during production builds. */
+@source "./";
+@source "../index.html";
+
 /* AstroExpert global styles */
 :root {
   color-scheme: dark;
